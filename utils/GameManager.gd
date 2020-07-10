@@ -7,14 +7,20 @@ const PLAYER_PROJECTILE_LAYER: int = 4
 const ENEMY_PROJECTILE_LAYER: int = 5
 const PROPS_LAYER: int = 11
 
+const PUBSUB_KEYS = {
+	"PICKUP": "PICKUP"
+}
+
 var debug: bool = true
+
+var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
 ##
 # Builtin functions
 ##
 
 func _ready() -> void:
-	pass
+	rng.randomize()
 
 func _input(event: InputEvent) -> void:
 	# TODO debug

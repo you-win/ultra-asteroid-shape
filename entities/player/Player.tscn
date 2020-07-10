@@ -23,7 +23,9 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3 ]
 }
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=[
+"player",
+]]
 rotation = -1.5708
 collision_layer = 2
 script = ExtResource( 2 )

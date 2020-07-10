@@ -12,20 +12,24 @@ var next_animation: String = ANIMATIONS["DEFAULT"]
 ##
 
 func _ready() -> void:
+	self.lifetime = 5.0
 	self.shot_delay = 0.5
-	self.speed = 200.0
+	self.speed = 5.0
 
 	$AnimationPlayer.play(self.current_animation)
 
-func _physics_process(_delta: float) -> void:
-	var current_rotation = self.global_rotation
-	self.target_velocity = Vector2(cos(current_rotation), sin(current_rotation)) * self.speed
-	
-	self.actual_velocity = move_and_slide(self.target_velocity)
+	$Timer.connect("timeout", self, "_on_timer_timeout")
+	$Timer.start(self.lifetime)
+
+func _physics_process(delta: float) -> void:
+	._physics_process(delta)
 
 ##
 # Connections
 ##
+
+func _on_timer_timeout() -> void:
+	self.queue_free()
 
 ##
 # Private functions

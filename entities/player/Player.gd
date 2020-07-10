@@ -81,3 +81,8 @@ func shoot() -> void:
 	parent_node.call_deferred("add_child", instance)
 
 	shoot_timer.start(instance.shot_delay)
+
+func event_published(event_key: String, payload) -> void:
+	match event_key:
+		GameManager.PUBSUB_KEYS.PICKUP:
+			pass
