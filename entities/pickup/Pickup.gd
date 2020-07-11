@@ -5,7 +5,8 @@ extends Area2D
 ##
 
 func _ready() -> void:
-	pass
+	self.connect("body_entered", self, "_on_body_entered")
+	$AnimationPlayer.play("DEFAULT")
 
 ##
 # Connections

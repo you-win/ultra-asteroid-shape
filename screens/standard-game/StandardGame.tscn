@@ -1,19 +1,29 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://screens/standard-game/StandardGame.gd" type="Script" id=1]
 [ext_resource path="res://entities/player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://entities/spawner/Spawner.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/standard-game/StandardGame.tscn" type="PackedScene" id=4]
+[ext_resource path="res://entities/spawn-area/SpawnArea.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/PressStart.tres" type="DynamicFont" id=6]
+[ext_resource path="res://entities/enemy-spawner/EnemySpawner.tscn" type="PackedScene" id=7]
 
 [node name="StandardGame" type="Node2D"]
 script = ExtResource( 1 )
 
 [node name="Spawners" type="Node" parent="."]
 
-[node name="Spawner" parent="Spawners" instance=ExtResource( 3 )]
+[node name="PlayerSpawner" parent="Spawners" instance=ExtResource( 3 )]
 position = Vector2( -101, -62 )
 entity_to_spawn = ExtResource( 2 )
 spawn_on_ready = true
+
+[node name="SpawnArea" parent="Spawners" instance=ExtResource( 5 )]
+position = Vector2( 0, 17 )
+
+[node name="EnemySpawner" parent="Spawners" instance=ExtResource( 7 )]
+position = Vector2( -1, 14 )
+scale = Vector2( 1.78125, 1.42188 )
 
 [node name="ActiveEntities" type="Node" parent="."]
 
@@ -23,3 +33,16 @@ tile_data = PoolIntArray( -786454, 0, 0, -786453, 11, 0, -786452, 11, 0, -786451
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 zoom = Vector2( 0.5, 0.5 )
+
+[node name="PointsLabel" type="Label" parent="."]
+margin_left = -108.0
+margin_top = -175.0
+margin_right = 108.0
+margin_bottom = -161.0
+grow_horizontal = 2
+custom_fonts/font = ExtResource( 6 )
+text = "Points placeholder"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

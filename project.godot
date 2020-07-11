@@ -27,6 +27,7 @@ config/icon="res://assets/icon.png"
 [autoload]
 
 GameManager="*res://utils/GameManager.gd"
+ChaosGenerator="*res://utils/ChaosGenerator.gd"
 PubSub="*res://utils/pub-sub/PubSub.gd"
 
 [debug]

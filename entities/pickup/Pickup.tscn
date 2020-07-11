@@ -4,7 +4,7 @@
 [ext_resource path="res://entities/pickup/Pickup.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 5, 5 )
+extents = Vector2( 7, 7 )
 
 [sub_resource type="Animation" id=2]
 resource_name = "DEFAULT"
@@ -24,6 +24,7 @@ tracks/0/keys = {
 }
 
 [node name="Pickup" type="Area2D"]
+collision_mask = 2
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
@@ -33,6 +34,7 @@ __meta__ = {
 texture = ExtResource( 1 )
 vframes = 6
 hframes = 8
+frame = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )

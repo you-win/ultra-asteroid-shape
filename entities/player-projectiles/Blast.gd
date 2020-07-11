@@ -14,7 +14,7 @@ var next_animation: String = ANIMATIONS["DEFAULT"]
 func _ready() -> void:
 	self.lifetime = 5.0
 	self.shot_delay = 0.5
-	self.speed = 5.0
+	self.speed = 4.0
 
 	$AnimationPlayer.play(self.current_animation)
 

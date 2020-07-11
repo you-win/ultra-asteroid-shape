@@ -31,6 +31,8 @@ onready var shoot_timer = $ShootTimer
 func _ready() -> void:
 	shoot_timer.connect("timeout", self, "_on_shoot_timer_timeout")
 
+	PubSub.subscribe(GameManager.PUBSUB_KEYS.PICKUP, self)
+
 	$AnimationPlayer.play(current_animation)
 
 func _physics_process(_delta: float) -> void:

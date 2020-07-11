@@ -1,5 +1,11 @@
 extends Node
 
+"""
+GameManager
+
+Holds shared data for use across many objects. This is the single source of truth for the game.
+"""
+
 const WALL_LAYER: int = 1
 const PLAYER_LAYER: int = 2
 const ENEMY_LAYER: int = 3
@@ -14,6 +20,8 @@ const PUBSUB_KEYS = {
 var debug: bool = true
 
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
+
+var current_chaos_level: int = 1
 
 ##
 # Builtin functions
