@@ -14,7 +14,8 @@ const ENEMY_PROJECTILE_LAYER: int = 5
 const PROPS_LAYER: int = 11
 
 const PUBSUB_KEYS = {
-	"PICKUP": "PICKUP"
+	"PICKUP": "PICKUP",
+	"GAME_OVER": "GAME_OVER"
 }
 
 var debug: bool = true

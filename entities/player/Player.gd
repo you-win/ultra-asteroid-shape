@@ -32,6 +32,7 @@ func _ready() -> void:
 	shoot_timer.connect("timeout", self, "_on_shoot_timer_timeout")
 
 	PubSub.subscribe(GameManager.PUBSUB_KEYS.PICKUP, self)
+	PubSub.subscribe(GameManager.PUBSUB_KEYS.GAME_OVER, self)
 
 	$AnimationPlayer.play(current_animation)
 
@@ -57,6 +58,12 @@ func _physics_process(_delta: float) -> void:
 	target_velocity = Vector2(cos(current_rotation), sin(current_rotation)) * target_movement
 	
 	actual_velocity = move_and_slide(target_velocity)
+
+	if get_slide_count() > 0:
+		for i in get_slide_count():
+			if get_slide_collision(i).collider.collision_layer != GameManager.WALL_LAYER:
+				PubSub.publish(GameManager.PUBSUB_KEYS.GAME_OVER, {"name": get_slide_collision(i).collider.NAME})
+
 
 ##
 # Connections
@@ -87,4 +94,6 @@ func shoot() -> void:
 func event_published(event_key: String, payload) -> void:
 	match event_key:
 		GameManager.PUBSUB_KEYS.PICKUP:
+			pass
+		GameManager.PUBSUB_KEYS.GAME_OVER:
 			pass

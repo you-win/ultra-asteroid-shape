@@ -6,7 +6,7 @@ export var time_bewtween_spawns: float = 1.0
 export var number_to_spawn: int = 1
 export var free_on_completion: bool = true
 
-onready var level_node: Node = get_parent().get_parent().get_node("ActiveEntities")
+onready var entities_node: Node = get_parent().get_parent().get_node("ActiveEntities")
 
 ##
 # Builtin functions
@@ -33,7 +33,7 @@ func _on_timer_timeout() -> void:
 func _spawn() -> void:
 	var entity_instance := entity_to_spawn.instance()
 	entity_instance.global_position = self.global_position
-	level_node.call_deferred("add_child", entity_instance)
+	entities_node.call_deferred("add_child", entity_instance)
 
 ##
 # Public functions

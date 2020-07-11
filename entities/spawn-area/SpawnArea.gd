@@ -3,7 +3,7 @@ extends Area2D
 var pickup: PackedScene = preload("res://entities/pickup/Pickup.tscn")
 
 onready var rectangle_size: Vector2 = $CollisionShape2D.shape.extents/2
-onready var level_node: Node = get_parent().get_parent().get_node("ActiveEntities")
+onready var entities_node: Node = get_parent().get_parent().get_node("ActiveEntities")
 
 ##
 # Builtin functions
@@ -24,7 +24,7 @@ func _ready() -> void:
 func _spawn() -> void:
 	var instance := pickup.instance()
 	instance.global_position = _generate_random_position_in_area()
-	level_node.call_deferred("add_child", instance)
+	entities_node.call_deferred("add_child", instance)
 
 
 func _generate_random_position_in_area() -> Vector2:
