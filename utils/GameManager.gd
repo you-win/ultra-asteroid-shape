@@ -15,12 +15,12 @@ const PROPS_LAYER: int = 11
 
 const PUBSUB_KEYS = {
 	"PICKUP": "PICKUP",
-	"GAME_OVER": "GAME_OVER"
+	"GAME_OVER": "GAME_OVER",
+	"CHAOS_PLAYER": "CHAOS_PLAYER",
+	"CHAOS_ENEMY": "CHAOS_ENEMY"
 }
 
 var debug: bool = true
-
-var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
 var current_chaos_level: int = 1
 
@@ -29,7 +29,7 @@ var current_chaos_level: int = 1
 ##
 
 func _ready() -> void:
-	rng.randomize()
+	randomize()
 
 func _input(event: InputEvent) -> void:
 	# TODO debug
