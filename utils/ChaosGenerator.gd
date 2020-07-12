@@ -45,6 +45,10 @@ var perm_player_effects_keys: Array = PERM_PLAYER_EFFECTS.keys()
 var temp_enemy_effects_keys: Array = TEMP_ENEMY_EFFECTS.keys()
 var perm_enemy_effects_keys: Array = PERM_ENEMY_EFFECTS.keys()
 
+var last_temp_player_effect: int = -1
+
+var chaos_level: int = 1
+
 ##
 # Builtin functions
 ##
@@ -60,6 +64,10 @@ func _ready() -> void:
 # Private functions
 ##
 
+func _subscribe_to_pubsub() -> void:
+	PubSub.subscribe(GameManager.PUBSUB_KEYS.PICKUP, self)
+	PubSub.subscribe(GameManager.PUBSUB_KEYS.INCREASE_CHAOS, self)
+
 func _send_out_new_effect() -> void:
 	# TODO always use temp player effects for now
 	# var effect_type: int = rng.randi_range(0, 3)
@@ -68,6 +76,9 @@ func _send_out_new_effect() -> void:
 	match effect_type:
 		0: # Temporary player effects
 			random_number = rng.randi_range(0, temp_player_effects_keys.size() - 1)
+			while random_number == last_temp_player_effect:
+				random_number = rng.randi_range(0, temp_player_effects_keys.size() - 1)
+			last_temp_player_effect = random_number
 			_create_temp_player_effect(temp_player_effects_keys[random_number])
 		1:
 			random_number = rng.randi_range(0, perm_player_effects_keys.size())
@@ -88,7 +99,7 @@ func _create_temp_player_effect(effect_name: String) -> void:
 	match TEMP_PLAYER_EFFECTS[effect_name]:
 		TEMP_PLAYER_EFFECTS.DRUNK_AIM:
 			modifier = "shoot_aim_modifier"
-			value = str(rng.randf_range(-1.5, 1.5))
+			value = "true"
 		TEMP_PLAYER_EFFECTS.NO_BRAKES:
 			modifier = "disable_forward_movement_modifier"
 			value = "true"
@@ -119,6 +130,10 @@ func _create_temp_player_effect(effect_name: String) -> void:
 ##
 # Public functions
 ##
+
+func refresh_chaos() -> void:
+	_subscribe_to_pubsub()
+	chaos_level = 1
 
 func event_published(event_key: String, payload) -> void:
 	match event_key:

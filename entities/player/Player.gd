@@ -12,7 +12,7 @@ const SHOOT_TIMER_TIME: float = 0.5
 
 var base_velocity_modifier: Vector2 = Vector2.ONE
 var base_rotation_modifier: float = 1.0
-var base_shoot_aim_modifier: float = 0.0
+var base_shot_rotation_modifier: bool = false
 var base_disable_movement_modifiers: String = "None"
 var base_replace_movement_modifiers: String = "None"
 var base_bullet_amount_modifier: int = 1
@@ -27,7 +27,7 @@ var actual_velocity: Vector2 = Vector2.ZERO
 
 var velocity_modifier: Vector2 = Vector2.ONE
 var rotation_modifier: float = 1.0
-var shoot_aim_modifier: float = 0.0
+var shot_rotation_modifier: bool = false
 var disable_movement_modifier: String = "None"
 var replace_movement_modifier: String = "None"
 var bullet_amount_modifier: int = 1
@@ -102,6 +102,7 @@ func _on_shoot_timer_timeout() -> void:
 	can_shoot = true
 
 func _on_killed_animation_finished(animation_name: String) -> void:
+	$AnimationPlayer.disconnect("animation_finished", self, "_on_killed_animation_finished")
 	if animation_name == ANIMATIONS.KILLED:
 		var killed_player_scene = load("res://entities/player/KilledPlayer.tscn")
 		var killed_player = killed_player_scene.instance()
@@ -127,14 +128,16 @@ func _killed() -> void:
 	velocity_modifier = Vector2.ZERO
 	rotation_modifier = 0.0
 	
-	$AnimationPlayer.connect("animation_finished", self, "_on_killed_animation_finished")
+	if not $AnimationPlayer.is_connected("animation_finished", self, "_on_killed_animation_finished"):
+		$AnimationPlayer.connect("animation_finished", self, "_on_killed_animation_finished")
+	
 	$AnimationPlayer.play(ANIMATIONS.KILLED)
 
 func _reset_modifiers() -> void:
 	InputMap.load_from_globals()
 	velocity_modifier = base_velocity_modifier
 	rotation_modifier = base_rotation_modifier
-	shoot_aim_modifier = base_shoot_aim_modifier
+	shot_rotation_modifier = base_shot_rotation_modifier
 	shot_delay_modifier = base_shot_delay_modifier
 	replace_movement_modifier = base_replace_movement_modifiers
 	disable_movement_modifier = base_disable_movement_modifiers
@@ -156,7 +159,11 @@ func shoot() -> void:
 	if bullet_amount_modifier == 1:
 		var instance = projectile.instance()
 		instance.global_position = self.global_position
-		instance.global_rotation = self.global_rotation + shoot_aim_modifier
+		
+		var modifier: float = 0.0
+		if shot_rotation_modifier:
+			modifier = rand_range(-1.5, 1.5)
+		instance.global_rotation = self.global_rotation + modifier
 
 		parent_node.call_deferred("add_child", instance)
 
@@ -184,7 +191,7 @@ func event_published(event_key: String, payload) -> void:
 			_reset_modifiers()
 			match payload["modifier"]:
 				"shoot_aim_modifier":
-					shoot_aim_modifier = float(payload["value"])
+					shot_rotation_modifier = true
 				"disable_forward_movement_modifier":
 					replace_movement_modifier = "ui_up"
 				"inputmap":

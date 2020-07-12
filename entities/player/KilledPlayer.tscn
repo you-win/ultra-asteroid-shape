@@ -28,6 +28,7 @@ tracks/0/keys = {
 ]]
 rotation = -1.5708
 collision_layer = 2
+collision_mask = 0
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true

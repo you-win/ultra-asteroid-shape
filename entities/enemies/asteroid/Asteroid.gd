@@ -40,7 +40,7 @@ func _physics_process(_delta: float) -> void:
 
 	var collision = move_and_collide(target_velocity)
 	if collision != null:
-		if collision.collider.collision_layer == GameManager.PLAYER_LAYER:
+		if collision.collider.is_in_group(GameManager.PLAYER_GROUP):
 			self.queue_free()
 			PubSub.publish(GameManager.PUBSUB_KEYS.GAME_OVER, {"name": NAME})
 

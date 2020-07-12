@@ -21,8 +21,18 @@ func _ready() -> void:
 	$Timer.connect("timeout", self, "_on_timer_timeout")
 	$Timer.start(self.lifetime)
 
-func _physics_process(delta: float) -> void:
-	._physics_process(delta)
+func _physics_process(_delta: float) -> void:
+	var current_rotation = self.global_rotation
+	self.actual_velocity = Vector2(cos(current_rotation), sin(current_rotation)) * self.speed
+	
+	var collision = move_and_collide(self.actual_velocity)
+	if collision != null:
+		if collision.collider.is_in_group(GameManager.WALL_GROUP):
+			self.queue_free()
+		if collision.collider.is_in_group(GameManager.ENEMY_GROUP):
+			# TODO have a death state
+			collision.collider.queue_free()
+			self.queue_free()
 
 ##
 # Connections

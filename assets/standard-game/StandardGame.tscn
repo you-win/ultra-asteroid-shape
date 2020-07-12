@@ -2,7 +2,9 @@
 
 [ext_resource path="res://assets/standard-game/StandardGame.tres" type="TileSet" id=1]
 
-[node name="StandardGame" type="TileMap"]
+[node name="StandardGame" type="TileMap" groups=[
+"wall",
+]]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
 format = 1

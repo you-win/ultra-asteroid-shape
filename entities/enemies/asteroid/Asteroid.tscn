@@ -23,8 +23,10 @@ tracks/0/keys = {
 "values": [ 0, 1, 2 ]
 }
 
-[node name="Asteroid" type="KinematicBody2D"]
-collision_layer = 4
+[node name="Asteroid" type="KinematicBody2D" groups=[
+"enemy",
+]]
+collision_layer = 2147483652
 collision_mask = 2
 script = ExtResource( 2 )
 __meta__ = {

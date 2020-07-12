@@ -15,9 +15,13 @@ onready var points_label: Label = $UILayer/PointsLabel
 func _ready() -> void:
 	points_label.text = str(points)
 	
-	PubSub.subscribe(GameManager.PUBSUB_KEYS.PICKUP, ChaosGenerator)
+	ChaosGenerator.refresh_chaos()
 	PubSub.subscribe(GameManager.PUBSUB_KEYS.PICKUP, self)
 	PubSub.subscribe(GameManager.PUBSUB_KEYS.GAME_OVER, self)
+
+func _physics_process(_delta: float) -> void:
+	if points > 10:
+		PubSub.publish(GameManager.PUBSUB_KEYS.INCREASE_CHAOS)
 
 ##
 # Connections

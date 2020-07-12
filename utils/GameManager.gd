@@ -6,16 +6,15 @@ GameManager
 Holds shared data for use across many objects. This is the single source of truth for the game.
 """
 
-const WALL_LAYER: int = 1
-const PLAYER_LAYER: int = 2
-const ENEMY_LAYER: int = 3
-const PLAYER_PROJECTILE_LAYER: int = 4
-const ENEMY_PROJECTILE_LAYER: int = 5
-const PROPS_LAYER: int = 11
+const WALL_GROUP: String = "wall"
+const PLAYER_GROUP: String = "player"
+const ENEMY_GROUP: String = "enemy"
+const PROPS_GROUP: String = "prop"
 
 const PUBSUB_KEYS = {
 	"PICKUP": "PICKUP",
 	"GAME_OVER": "GAME_OVER",
+	"INCREASE_CHAOS": "INCREASE_CHAOS",
 	"CHAOS_PLAYER_TEMP": "CHAOS_PLAYER_TEMP",
 	"CHAOS_PLAYER_PERM": "CHAOS_PLAYER_PERM",
 	"CHAOS_ENEMY_TEMP": "CHAOS_ENEMY_TEMP",
@@ -23,8 +22,6 @@ const PUBSUB_KEYS = {
 }
 
 var debug: bool = true
-
-var current_chaos_level: int = 1
 
 ##
 # Builtin functions
