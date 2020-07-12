@@ -86,10 +86,18 @@ func _physics_process(_delta: float) -> void:
 	target_velocity = Vector2(cos(current_rotation), sin(current_rotation)) * target_movement * velocity_modifier
 	
 	actual_velocity = move_and_slide(target_velocity)
+	
+	if target_velocity.length() != 0:
+		if not $Sounds/Movement.playing:
+			$Sounds/Movement.play()
+		$Particles2D.emitting = true
+	else:
+		$Particles2D.emitting = false
+		$Sounds/Movement.stop()
 
 	if get_slide_count() > 0:
 		for i in get_slide_count():
-			if get_slide_collision(i).collider.collision_layer != GameManager.WALL_LAYER:
+			if not get_slide_collision(i).collider.is_in_group(GameManager.WALL_GROUP):
 				PubSub.publish(GameManager.PUBSUB_KEYS.GAME_OVER, {"name": get_slide_collision(i).collider.NAME})
 
 	$QuipContainer.global_rotation = 0
@@ -122,8 +130,11 @@ func _subscribe_to_pubsub() -> void:
 	PubSub.subscribe(GameManager.PUBSUB_KEYS.CHAOS_PLAYER_TEMP, self)
 
 func _killed() -> void:
+	PubSub.unsubscribe(self)
+	$Sounds/Death.play()
 	shoot_timer.stop()
 	can_shoot = false
+	$CollisionShape2D.disabled = true
 
 	velocity_modifier = Vector2.ZERO
 	rotation_modifier = 0.0
@@ -153,8 +164,13 @@ func _set_quip(quip: String) -> void:
 # Public functions
 ##
 
+func queue_free() -> void:
+	PubSub.unsubscribe(self)
+	.queue_free()
+
 func shoot() -> void:
 	can_shoot = false
+	$Sounds/Shoot.play()
 	
 	if bullet_amount_modifier == 1:
 		var instance = projectile.instance()

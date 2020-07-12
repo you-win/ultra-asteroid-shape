@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://screens/standard-game/StandardGame.gd" type="Script" id=1]
 [ext_resource path="res://entities/player/Player.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://entities/spawn-area/SpawnArea.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/PressStart.tres" type="DynamicFont" id=6]
 [ext_resource path="res://entities/enemy-spawner/EnemySpawner.tscn" type="PackedScene" id=7]
+[ext_resource path="res://entities/enemies/ufo/Ufo.tscn" type="PackedScene" id=8]
 
 [node name="StandardGame" type="Node2D"]
 script = ExtResource( 1 )
@@ -30,16 +31,22 @@ __meta__ = {
 [node name="Spawners" type="Node" parent="."]
 
 [node name="PlayerSpawner" parent="Spawners" instance=ExtResource( 3 )]
-position = Vector2( -101, -62 )
+position = Vector2( 0, 55 )
 entity_to_spawn = ExtResource( 2 )
 spawn_on_ready = true
 
 [node name="SpawnArea" parent="Spawners" instance=ExtResource( 5 )]
 position = Vector2( 0, 17 )
 
-[node name="EnemySpawner" parent="Spawners" instance=ExtResource( 7 )]
+[node name="AsteroidSpawner" parent="Spawners" instance=ExtResource( 7 )]
 position = Vector2( -1, 14 )
 scale = Vector2( 1.78125, 1.42188 )
+
+[node name="UfoSpawner" parent="Spawners" instance=ExtResource( 7 )]
+position = Vector2( -1, 14 )
+scale = Vector2( 1.78125, 1.42188 )
+enemy = ExtResource( 8 )
+spawn_delay = 10
 
 [node name="ActiveEntities" type="Node" parent="."]
 

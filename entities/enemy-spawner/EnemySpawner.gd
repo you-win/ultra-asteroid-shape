@@ -1,8 +1,8 @@
 extends Path2D
 
-var enemy: PackedScene = preload("res://entities/enemies/asteroid/Asteroid.tscn")
+export var enemy: PackedScene = preload("res://entities/enemies/asteroid/Asteroid.tscn")
 
-var spawn_delay: int = 1
+export var spawn_delay: int = 1
 
 onready var spawn_path: PathFollow2D = $PathFollow2D
 onready var timer: Timer = $Timer

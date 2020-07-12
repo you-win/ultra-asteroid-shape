@@ -4,9 +4,9 @@
 [ext_resource path="res://assets/PressStart.tres" type="DynamicFont" id=2]
 [ext_resource path="res://screens/main-menu/MainMenu.gd" type="Script" id=3]
 
-[sub_resource type="StyleBoxTexture" id=2]
-
 [sub_resource type="StyleBoxTexture" id=1]
+
+[sub_resource type="StyleBoxTexture" id=2]
 
 [node name="MainMenu" type="Node2D"]
 script = ExtResource( 3 )
@@ -32,8 +32,8 @@ margin_right = 80.0
 margin_bottom = -1.0
 grow_horizontal = 2
 grow_vertical = 2
-custom_styles/pressed = SubResource( 2 )
-custom_styles/normal = SubResource( 1 )
+custom_styles/pressed = SubResource( 1 )
+custom_styles/normal = SubResource( 2 )
 custom_fonts/font = ExtResource( 2 )
 text = "Start Game"
 __meta__ = {
@@ -45,8 +45,8 @@ margin_left = -80.0
 margin_top = 7.0
 margin_right = 81.0
 margin_bottom = 27.0
-custom_styles/pressed = SubResource( 2 )
-custom_styles/normal = SubResource( 1 )
+custom_styles/pressed = SubResource( 1 )
+custom_styles/normal = SubResource( 2 )
 custom_fonts/font = ExtResource( 2 )
 text = "Highscores"
 
@@ -55,8 +55,8 @@ margin_left = -80.0
 margin_top = 35.0
 margin_right = 81.0
 margin_bottom = 55.0
-custom_styles/pressed = SubResource( 2 )
-custom_styles/normal = SubResource( 1 )
+custom_styles/pressed = SubResource( 1 )
+custom_styles/normal = SubResource( 2 )
 custom_fonts/font = ExtResource( 2 )
 text = "Quit"
 
