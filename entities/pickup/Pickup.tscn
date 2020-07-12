@@ -49,3 +49,5 @@ anims/DEFAULT = SubResource( 2 )
 stream = ExtResource( 3 )
 
 [node name="Timer" type="Timer" parent="."]
+
+[node name="Tween" type="Tween" parent="."]

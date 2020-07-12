@@ -98,7 +98,7 @@ initial_velocity = 64.52
 [node name="Movement" type="AudioStreamPlayer2D" parent="Sounds"]
 rotation = -1.5708
 stream = ExtResource( 7 )
-volume_db = -11.107
+volume_db = -14.136
 
 [node name="Shoot" type="AudioStreamPlayer2D" parent="Sounds"]
 rotation = -1.5708

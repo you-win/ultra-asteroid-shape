@@ -21,6 +21,8 @@ const PUBSUB_KEYS = {
 	"CHAOS_ENEMY_PERM": "CHAOS_ENEMY_PERM"
 }
 
+var menu_select_sound: AudioStreamPlayer2D = AudioStreamPlayer2D.new()
+
 var debug: bool = true
 
 ##
@@ -29,15 +31,15 @@ var debug: bool = true
 
 func _ready() -> void:
 	randomize()
-
-func _input(event: InputEvent) -> void:
-	# TODO debug
-	if event.is_action_pressed("ui_cancel"):
-		get_tree().quit()
+	menu_select_sound.stream = load("res://assets/props/menu-select.wav")
+	add_child(menu_select_sound)
 
 ##
 # Connections
 ##
+
+func _on_select_sound_finished() -> void:
+	get_tree().root.get_node("Select").queue_free()
 
 ##
 # Private functions

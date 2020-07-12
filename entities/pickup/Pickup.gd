@@ -1,6 +1,6 @@
 extends Area2D
 
-var eligibility_delay: float = 0.2
+var eligibility_delay: float = 0.5
 var eligible_for_pickup: bool = false
 
 ##
@@ -15,6 +15,9 @@ func _ready() -> void:
 	$AnimationPlayer.play("DEFAULT")
 	$Timer.start(eligibility_delay)
 
+	$Tween.interpolate_property($Sprite, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), eligibility_delay, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.start()
+
 ##
 # Connections
 ##
@@ -27,6 +30,7 @@ func _on_body_entered(body: Node) -> void:
 		PubSub.publish(GameManager.PUBSUB_KEYS.PICKUP)
 
 func _on_timer_timeout() -> void:
+	$Timer.stop()
 	eligible_for_pickup = true
 
 func _on_sound_finished() -> void:
