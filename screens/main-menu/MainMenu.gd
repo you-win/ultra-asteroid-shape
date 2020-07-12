@@ -38,6 +38,9 @@ func _ready() -> void:
 	
 	if not get_tree().root.get_node_or_null("Select"):
 		_create_menu_select_sound()
+	
+	if get_tree().root.get_node_or_null("StandardGameMusic"):
+		get_tree().root.get_node("StandardGameMusic").queue_free()
 
 func _process(_delta: float) -> void:
 	if cursor.global_position.y != CURSOR_Y_POSITIONS[current_button]:
@@ -67,6 +70,7 @@ func _input(event: InputEvent) -> void:
 func _on_start_button_pressed() -> void:
 	get_tree().root.get_node("Select").connect("finished", GameManager, "_on_select_sound_finished")
 	get_tree().root.get_node("Select").play()
+	_create_standard_game_music()
 	get_tree().change_scene("res://screens/standard-game/StandardGame.tscn")
 
 func _on_high_scores_button_pressed() -> void:
@@ -104,6 +108,13 @@ func _create_menu_select_sound() -> void:
 	menu_select_sound.name = "Select"
 	menu_select_sound.stream = load("res://assets/props/menu-select.wav")
 	get_tree().root.call_deferred("add_child", menu_select_sound)
+
+func _create_standard_game_music() -> void:
+	var standard_game_music: AudioStreamPlayer2D = AudioStreamPlayer2D.new()
+	standard_game_music.name = "StandardGameMusic"
+	standard_game_music.stream = load("res://assets/music/NearSpace.ogg")
+	standard_game_music.volume_db += 5.0
+	get_tree().root.call_deferred("add_child", standard_game_music)
 
 ##
 # Public functions

@@ -29,6 +29,7 @@ onready var target: KinematicBody2D = get_parent().get_node_or_null("Player")
 func _ready() -> void:
 	visibility_notifier.connect("screen_entered", self, "_on_screen_entered")
 	visibility_notifier.connect("screen_exited", self, "_on_screen_exited")
+	$Sounds/Killed.connect("finished", self, "_on_death_sound_finished")
 	
 	self.global_rotation = 0
 	$AnimationPlayer.play(current_animation)
@@ -63,6 +64,10 @@ func _on_screen_exited() -> void:
 		PubSub.unsubscribe(self)
 		.queue_free()
 
+func _on_death_sound_finished() -> void:
+	PubSub.unsubscribe(self)
+	.queue_free()
+
 ##
 # Private functions
 ##
@@ -72,8 +77,10 @@ func _on_screen_exited() -> void:
 ##
 
 func queue_free() -> void:
-	PubSub.unsubscribe(self)
-	.queue_free()
+	$Sounds/Move.stop()
+	$Sounds/Killed.play()
+	$CollisionShape2D.disabled = true
+	$Sprite.visible = false
 
 func event_published(event_key: String, payload) -> void:
 	match event_key:

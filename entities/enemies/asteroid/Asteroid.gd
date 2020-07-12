@@ -27,8 +27,8 @@ onready var visibility_notifier: VisibilityNotifier2D = $VisibilityNotifier2D
 func _ready() -> void:
 	visibility_notifier.connect("screen_entered", self, "_on_screen_entered")
 	visibility_notifier.connect("screen_exited", self, "_on_screen_exited")
+	$Sounds/Death.connect("finished", self, "_on_death_sound_finished")
 	
-
 	target_velocity = Vector2(cos(self.rotation), sin(self.rotation)) * MOVEMENT_SPEED
 	self.rotation = 0.0
 

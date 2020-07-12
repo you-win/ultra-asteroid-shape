@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/NearSpace.ogg-5caf974da7b502552a48c0cc13453143.oggstr"
+
+[deps]
+
+source_file="res://assets/music/NearSpace.ogg"
+dest_files=[ "res://.import/NearSpace.ogg-5caf974da7b502552a48c0cc13453143.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

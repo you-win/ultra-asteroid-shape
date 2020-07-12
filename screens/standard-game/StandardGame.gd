@@ -18,6 +18,9 @@ func _ready() -> void:
 	ChaosGenerator.refresh_chaos()
 	PubSub.subscribe(GameManager.PUBSUB_KEYS.PICKUP, self)
 	PubSub.subscribe(GameManager.PUBSUB_KEYS.GAME_OVER, self)
+	
+	if not get_tree().root.get_node("StandardGameMusic").playing:
+		get_tree().root.get_node("StandardGameMusic").play()
 
 func _physics_process(_delta: float) -> void:
 	if points > 10:

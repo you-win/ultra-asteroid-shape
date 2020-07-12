@@ -1,10 +1,12 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://assets/standard-game/StandardGame.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/PressStart.tres" type="DynamicFont" id=2]
 [ext_resource path="res://screens/main-menu/MainMenu.gd" type="Script" id=3]
 [ext_resource path="res://assets/player/Player.png" type="Texture" id=4]
 [ext_resource path="res://assets/props/menu-sound.wav" type="AudioStream" id=5]
+[ext_resource path="res://assets/player/PlayerParticle.png" type="Texture" id=6]
+[ext_resource path="res://assets/enemies/Particle.png" type="Texture" id=7]
 
 [sub_resource type="StyleBoxTexture" id=1]
 
@@ -101,3 +103,31 @@ region_rect = Rect2( 0, 0, 16, 16 )
 
 [node name="Menu" type="AudioStreamPlayer2D" parent="Sounds"]
 stream = ExtResource( 5 )
+
+[node name="Particles" type="Node" parent="."]
+
+[node name="GreyParticles" type="CPUParticles2D" parent="Particles"]
+amount = 50
+lifetime = 5.0
+texture = ExtResource( 7 )
+emission_shape = 2
+emission_rect_extents = Vector2( 800, 400 )
+gravity = Vector2( 0, 0 )
+initial_velocity = 21.51
+initial_velocity_random = 0.27
+orbit_velocity = 0.05
+orbit_velocity_random = 0.39
+hue_variation = -0.28
+hue_variation_random = 0.48
+
+[node name="GoldParticles" type="CPUParticles2D" parent="Particles"]
+amount = 60
+lifetime = 5.0
+texture = ExtResource( 6 )
+emission_shape = 2
+emission_rect_extents = Vector2( 800, 400 )
+gravity = Vector2( 0, 0 )
+initial_velocity = 32.26
+initial_velocity_random = 0.17
+orbit_velocity = 0.05
+orbit_velocity_random = 0.15

@@ -20,7 +20,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="GMTK Jam 2020"
+config/name="Ultra Asteroid Shape"
 run/main_scene="res://screens/main-menu/MainMenu.tscn"
 config/icon="res://assets/icon.png"
 
