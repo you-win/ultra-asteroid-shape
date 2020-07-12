@@ -1,5 +1,7 @@
 extends Node2D
 
+var old_points: int = 0
+var old_chaos: int = 0
 var points: int = 0
 var game_over: bool = false
 
@@ -7,6 +9,7 @@ var retry_flash_delay: float = 0.8
 var retry_hide_delay: float = 0.4
 
 onready var points_label: Label = $UILayer/PointsLabel
+onready var chaos_label: Label = $UILayer/ChaosLabel
 
 ##
 # Builtin functions
@@ -14,16 +17,28 @@ onready var points_label: Label = $UILayer/PointsLabel
 
 func _ready() -> void:
 	points_label.text = str(points)
+	chaos_label.text = str(ChaosGenerator.chaos_level)
 	
 	ChaosGenerator.refresh_chaos()
-	PubSub.subscribe(GameManager.PUBSUB_KEYS.PICKUP, self)
-	PubSub.subscribe(GameManager.PUBSUB_KEYS.GAME_OVER, self)
+	_subscribe_to_pubsub()
 	
 	if not get_tree().root.get_node("StandardGameMusic").playing:
 		get_tree().root.get_node("StandardGameMusic").play()
 
 func _physics_process(_delta: float) -> void:
-	if points > 10:
+	chaos_label.text = "Chaos: " + str(ChaosGenerator.chaos_level)
+	if(ChaosGenerator.chaos_level == 1 and points > 5):
+		old_points = 5
+		old_chaos += 1
+		PubSub.publish(GameManager.PUBSUB_KEYS.INCREASE_CHAOS)
+	elif(ChaosGenerator.chaos_level == 2 and points > 10):
+		old_points = 10
+		old_chaos += 1
+		PubSub.publish(GameManager.PUBSUB_KEYS.INCREASE_CHAOS)
+	elif(ChaosGenerator.chaos_level == 3 and points > (old_points + 10)):
+		old_points = points
+		old_chaos += 1
+		_create_asteroid_spawner()
 		PubSub.publish(GameManager.PUBSUB_KEYS.INCREASE_CHAOS)
 
 func _input(event: InputEvent) -> void:
@@ -48,6 +63,12 @@ func _on_retry_hide_timer_timeout() -> void:
 ##
 # Private functions
 ##
+
+func _create_asteroid_spawner() -> void:
+	# Defaults to asteroid spawner
+	var spawner_scene = load("res://entities/enemy-spawner/EnemySpawner.tscn")
+	var instance = spawner_scene.instance()
+	$Spawners.call_deferred("add_child", instance)
 
 func _show_and_update_game_over_layer(killedBy: String) -> void:
 	$GameOverLayer/KilledByLabel.text = "Killed by " + killedBy
@@ -74,6 +95,10 @@ func _add_retry_listener() -> void:
 	listener.name = "RetryListener"
 	call_deferred("add_child", listener)
 
+func _subscribe_to_pubsub() -> void:
+	PubSub.subscribe(GameManager.PUBSUB_KEYS.PICKUP, self)
+	PubSub.subscribe(GameManager.PUBSUB_KEYS.GAME_OVER, self)
+
 ##
 # Public functions
 ##
@@ -89,3 +114,11 @@ func event_published(event_key: String, payload):
 				_show_and_update_game_over_layer(payload["name"])
 				_create_retry_timers()
 				_add_retry_listener()
+				if points != 0:
+					for i in range(0, 10):
+						if GameManager.high_scores[i] < points:
+							GameManager.high_scores.insert(i, points)
+							GameManager.high_scores.pop_back()
+							return # Only replace one value
+						elif GameManager.high_scores[i] == points:
+							continue

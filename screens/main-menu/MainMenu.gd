@@ -60,8 +60,8 @@ func _input(event: InputEvent) -> void:
 			current_button = 0
 	if(event.is_action_pressed("ui_accept") or event.is_action_pressed("ui_select")):
 		button_order[current_button].emit_signal("button_down")
-	if event.is_action_pressed("ui_cancel"):
-		get_tree().quit()
+#	if event.is_action_pressed("ui_cancel"):
+#		get_tree().quit()
 
 ##
 # Connections
@@ -77,8 +77,8 @@ func _on_high_scores_button_pressed() -> void:
 	get_tree().root.get_node("Select").play()
 	get_tree().change_scene("res://screens/high-scores/HighScores.tscn")
 
-func _on_quit_button_pressed() -> void:
-	get_tree().quit()
+#func _on_quit_button_pressed() -> void:
+#	get_tree().quit()
 
 func _on_start_button_entered() -> void:
 	current_button = 0
@@ -114,6 +114,7 @@ func _create_standard_game_music() -> void:
 	standard_game_music.name = "StandardGameMusic"
 	standard_game_music.stream = load("res://assets/music/NearSpace.ogg")
 	standard_game_music.volume_db += 5.0
+	standard_game_music.pause_mode = PAUSE_MODE_PROCESS
 	get_tree().root.call_deferred("add_child", standard_game_music)
 
 ##

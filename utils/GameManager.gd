@@ -18,10 +18,23 @@ const PUBSUB_KEYS = {
 	"CHAOS_PLAYER_TEMP": "CHAOS_PLAYER_TEMP",
 	"CHAOS_PLAYER_PERM": "CHAOS_PLAYER_PERM",
 	"CHAOS_ENEMY_TEMP": "CHAOS_ENEMY_TEMP",
-	"CHAOS_ENEMY_PERM": "CHAOS_ENEMY_PERM"
+	"CHAOS_ENEMY_PERM": "CHAOS_ENEMY_PERM",
+	"CHAOS_SPAWN_UP": "CHAOS_SPAWN_UP"
 }
 
-var menu_select_sound: AudioStreamPlayer2D = AudioStreamPlayer2D.new()
+# TODO Hack for getting high scores to work
+var high_scores: Array = [
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0
+]
 
 var debug: bool = true
 
@@ -31,8 +44,6 @@ var debug: bool = true
 
 func _ready() -> void:
 	randomize()
-	menu_select_sound.stream = load("res://assets/props/menu-select.wav")
-	add_child(menu_select_sound)
 
 ##
 # Connections

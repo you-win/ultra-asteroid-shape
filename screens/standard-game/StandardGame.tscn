@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://screens/standard-game/StandardGame.gd" type="Script" id=1]
 [ext_resource path="res://entities/player/Player.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://entities/enemy-spawner/EnemySpawner.tscn" type="PackedScene" id=7]
 [ext_resource path="res://entities/enemies/ufo/Ufo.tscn" type="PackedScene" id=8]
 [ext_resource path="res://screens/standard-game/PauseLayer.gd" type="Script" id=9]
+[ext_resource path="res://assets/enemies/Particle.png" type="Texture" id=10]
 
 [node name="StandardGame" type="Node2D"]
 pause_mode = 1
@@ -26,6 +27,18 @@ grow_horizontal = 2
 custom_fonts/font = ExtResource( 6 )
 text = "Points placeholder"
 align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ChaosLabel" type="Label" parent="UILayer"]
+margin_left = -321.0
+margin_top = -175.0
+margin_right = -105.0
+margin_bottom = -161.0
+grow_horizontal = 2
+custom_fonts/font = ExtResource( 6 )
+text = "Chaos"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -48,7 +61,7 @@ scale = Vector2( 1.78125, 1.42188 )
 position = Vector2( -1, 14 )
 scale = Vector2( 1.78125, 1.42188 )
 enemy = ExtResource( 8 )
-spawn_delay = 10
+spawn_delay = 10.0
 
 [node name="ActiveEntities" type="Node" parent="."]
 
@@ -146,3 +159,23 @@ align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Particles" type="Node" parent="."]
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Particles"]
+amount = 38
+texture = ExtResource( 10 )
+emission_shape = 2
+emission_rect_extents = Vector2( 800, 400 )
+gravity = Vector2( 0, 0 )
+orbit_velocity = 0.05
+orbit_velocity_random = 0.06
+
+[node name="CPUParticles2D2" type="CPUParticles2D" parent="Particles"]
+amount = 38
+texture = ExtResource( 10 )
+emission_shape = 2
+emission_rect_extents = Vector2( 800, 400 )
+gravity = Vector2( 0, 0 )
+orbit_velocity = -0.05
+orbit_velocity_random = 0.06

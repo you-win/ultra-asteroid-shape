@@ -34,7 +34,7 @@ func _ready() -> void:
 	self.global_rotation = 0
 	$AnimationPlayer.play(current_animation)
 	
-	$Sounds/Move.pitch_scale += rand_range(-2, 2)
+	$Sounds/Move.pitch_scale += rand_range(0, 2)
 	
 	PubSub.subscribe(GameManager.PUBSUB_KEYS.GAME_OVER, self)
 
@@ -47,6 +47,7 @@ func _physics_process(_delta: float) -> void:
 	var collision := move_and_collide(target_velocity)
 	if collision:
 		if collision.collider.is_in_group(GameManager.PLAYER_GROUP):
+			should_chase = false
 			PubSub.publish(GameManager.PUBSUB_KEYS.GAME_OVER, {"name": NAME})
 	
 	if not $Sounds/Move.playing:

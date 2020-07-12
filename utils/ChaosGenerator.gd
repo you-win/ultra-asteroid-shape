@@ -127,6 +127,13 @@ func _create_temp_player_effect(effect_name: String) -> void:
 		"quip": quip
 	})
 
+func _increase_spawn_rates() -> void:
+	PubSub.publish(GameManager.PUBSUB_KEYS.CHAOS_SPAWN_UP)
+
+
+func _buff_enemy_speeds() -> void:
+	PubSub.publish(GameManager.PUBSUB_KEYS.CHAOS_ENEMY_PERM, {"name": "enemy_speed_modifier", "value": 0.5})
+
 ##
 # Public functions
 ##
@@ -139,3 +146,14 @@ func event_published(event_key: String, payload) -> void:
 	match event_key:
 		GameManager.PUBSUB_KEYS.PICKUP:
 			_send_out_new_effect()
+		GameManager.PUBSUB_KEYS.INCREASE_CHAOS:
+			chaos_level += 1
+			match chaos_level:
+				2:
+					_increase_spawn_rates()
+				3:
+					_increase_spawn_rates()
+					_buff_enemy_speeds()
+				_:
+					_buff_enemy_speeds()
+
