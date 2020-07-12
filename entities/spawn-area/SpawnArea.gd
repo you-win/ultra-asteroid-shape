@@ -43,5 +43,4 @@ func spawn() -> void:
 func event_published(event_key: String, payload) -> void:
 	match event_key:
 		GameManager.PUBSUB_KEYS.PICKUP:
-			print_debug("Spawning another pickup")
 			_spawn()

@@ -10,7 +10,7 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_select"):
 		PubSub.clear()
-		get_tree().change_scene("res://screens/standard-game/StandardGame.tscn")
+		get_tree().reload_current_scene()
 
 ##
 # Connections

@@ -63,14 +63,19 @@ anims/KILLED = SubResource( 3 )
 
 [node name="ShootTimer" type="Timer" parent="."]
 
-[node name="Quip" type="Label" parent="."]
-margin_left = 28.0001
-margin_top = -23.9999
-margin_right = 76.0001
-margin_bottom = -9.9999
-rect_rotation = 90.0
+[node name="QuipContainer" type="Node2D" parent="."]
+
+[node name="Quip" type="Label" parent="QuipContainer"]
+margin_left = -23.9999
+margin_top = -34.0001
+margin_right = 24.0001
+margin_bottom = -20.0001
+grow_horizontal = 2
+grow_vertical = 2
 custom_fonts/font = ExtResource( 3 )
-text = "test"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Tween" type="Tween" parent="QuipContainer"]
